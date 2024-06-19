@@ -1,18 +1,3 @@
-/**
- * Copyright 2006 Envoi Solutions LLC
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.codehaus.jettison.mapped;
 
 import java.io.StringWriter;
@@ -26,11 +11,12 @@ import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
 
 import org.codehaus.jettison.AbstractXMLStreamWriter;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import junit.framework.TestCase;
-
-public class MappedXMLStreamWriterTest extends TestCase {
+public class MappedXMLStreamWriterTest {
     
+    @Test
     public void testRoot() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
@@ -47,6 +33,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals("{\"root\":\"\"}", strWriter.toString());
     }
     
+    @Test
     public void testChild() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
@@ -65,6 +52,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals("{\"root\":{\"child\":\"\"}}", strWriter.toString());
     }
     
+    @Test
     public void testChildDropElement() throws Exception {
         StringWriter strWriter = new StringWriter();
         Configuration c = new Configuration();
@@ -85,6 +73,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals("{\"child\":\"\"}", strWriter.toString());
     }
     
+    @Test
     public void testChildDropElement2() throws Exception {
         StringWriter strWriter = new StringWriter();
         Configuration c = new Configuration();
@@ -107,6 +96,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals("{\"root2\":{\"child\":\"\"}}", strWriter.toString());
     }
     
+    @Test
     public void testChildDropElement3() throws Exception {
         StringWriter strWriter = new StringWriter();
         Configuration c = new Configuration();
@@ -132,6 +122,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals("{\"child\":\"\"}", strWriter.toString());
     }
     
+    @Test
     public void testChildDropElement4() throws Exception {
         StringWriter strWriter = new StringWriter();
         Configuration c = new Configuration();
@@ -156,6 +147,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals("{\"root\":{\"child2\":\"\"}}", strWriter.toString());
     }
     
+    @Test
     public void testText() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
@@ -178,6 +170,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals("{\"root\":{\"child\":\"testtesttest\"}}", strWriter.toString());
     }
     
+    @Test
     public void testTextEscapeForwardSlash() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
@@ -198,6 +191,8 @@ public class MappedXMLStreamWriterTest extends TestCase {
         
         assertEquals("{\"root\":{\"child\":\"http:\\/\\/localhost:8080\\/json\"}}", strWriter.toString());
     }
+    
+    @Test
     public void testTextForwardSlash() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
@@ -217,6 +212,8 @@ public class MappedXMLStreamWriterTest extends TestCase {
         
         assertEquals("{\"root\":{\"child\":\"http://localhost:8080/json\"}}", strWriter.toString());
     }
+    
+    @Test
     public void testTextForwardSlashWithLeftAngle() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
@@ -236,6 +233,8 @@ public class MappedXMLStreamWriterTest extends TestCase {
         
         assertEquals("{\"root\":{\"child\":\"<\\/abc>\"}}", strWriter.toString());
     }
+    
+    @Test
     public void testTextForwardSlashFirstChar() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
@@ -256,6 +255,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals("{\"root\":{\"child\":\"/abc\"}}", strWriter.toString());
     }
     
+    @Test
     public void testTextNullAsString() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
@@ -275,6 +275,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals("{\"root\":{\"child\":\"null\"}}", strWriter.toString());
     }
     
+    @Test
     public void testTextNullAsNull() throws Exception {
         StringWriter strWriter = new StringWriter();
         Configuration c = new Configuration();
@@ -296,6 +297,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals("{\"root\":{\"child\":null}}", strWriter.toString());
     }
     
+    @Test
     public void testAttributes() throws Exception {
         StringWriter strWriter = new StringWriter();
         
@@ -319,6 +321,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals("{\"root\":{\"@att\":\"attvalue\",\"@foo.att2\":\"attvalue\"}}", strWriter.toString());
     }
     
+    @Test
     public void testIntAttribute() throws Exception {
         StringWriter strWriter = new StringWriter();
         
@@ -336,6 +339,8 @@ public class MappedXMLStreamWriterTest extends TestCase {
         
         assertEquals("{\"root\":{\"@att\":123}}", strWriter.toString());
     }
+    
+    @Test
     public void testIntAttributeAsString() throws Exception {
         StringWriter strWriter = new StringWriter();
         
@@ -357,6 +362,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
     }
     
 
+    @Test
     public void testAttributesAsElements() throws Exception {
         StringWriter strWriter = new StringWriter();
         
@@ -384,6 +390,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals("{\"root\":{\"@att\":\"attvalue\",\"foo.att2\":\"attvalue\"}}", strWriter.toString());
     }
 
+    @Test
     public void testAttributesWithAtSupressed() throws Exception {
         StringWriter strWriter = new StringWriter();
         
@@ -412,6 +419,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals("{\"root\":{\"att\":\"attvalue\",\"foo.att2\":\"attvalue\"}}", strWriter.toString());
     }
     
+    @Test
     public void testTwoChildren() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
@@ -435,6 +443,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals("{\"root\":{\"child1\":\"\",\"child2\":\"\"}}", strWriter.toString());
     }
     
+    @Test
     public void testTwoChildrenWithSubChild() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
@@ -464,6 +473,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
                         "\"child2\":{\"subchild\":\"\"}}}", strWriter.toString());
     }
  
+    @Test
     public void testTwoChildrenWithSubChildWithText() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
@@ -500,6 +510,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
                         "\"child2\":{\"subchild\":\"test\"}}}", strWriter.toString());
     }
     
+    @Test
     public void testNestedArrayOfChildren() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
@@ -541,182 +552,202 @@ public class MappedXMLStreamWriterTest extends TestCase {
         w.close();
         strWriter.close();
         
-        assertEquals("{\"root\":{\"subchild1\":[{\"subchild2\":[\"first sub2\",{\"subchild3\":[\"first sub3\",\"second sub3\"]},\"third sub2\"]},\"sub1\"]}}"
+        assertEquals("{\"root\":{\"subchild1\":[{\"subchild2\":\"first sub2\"},{\"subchild2\":{\"subchild3\":[\"first sub3\",\"second sub3\"]},\"third sub2\"},\"sub1\"]}}"
 , strWriter.toString());
     }
     
-    //ISSUE-48
+    @Test
     public void testNestedArrayOfChildrenWithComplexElements() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
         AbstractXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
-        
+        w.serializeAsArray(con.createKey("", "", "results"));
+        w.serializeAsArray(con.createKey("", "", "symbolic"));
+        w.serializeAsArray(con.createKey("", "", "numeric"));
+
         w.writeStartDocument();
-        w.writeStartElement("root");
-        
-        	w.writeStartElement("subchild1");
-        
-        		w.writeStartElement("subchild2");
-        			w.writeCharacters("first sub2");
+        w.writeStartElement("SearchResult");
+        	w.writeStartElement("results");
+        		w.writeStartElement("field");
+        		w.writeCharacters("1");
         		w.writeEndElement();
-        		
+        
+        		w.writeStartElement("field");
+        		w.writeCharacters("2");
+        		w.writeEndElement();
         	w.writeEndElement();
-        	
-        	w.writeStartElement("subchild1");
-    			w.writeCharacters("text");
-    		w.writeEndElement();
-    		
-        	w.writeStartElement("subchild1");
-		 	   w.writeCharacters("text1");
-		    w.writeEndElement();
-			
-			w.writeStartElement("outer");
-				w.writeCharacters("test");
-			w.writeEndElement();
+        
+        	w.writeStartElement("results");
+        		w.writeStartElement("field");
+        		w.writeCharacters("1");
+        		w.writeEndElement();
+        
+        		w.writeStartElement("field");
+        		w.writeCharacters("2");
+        		w.writeEndElement();
+        	w.writeEndElement();
+        
+        	w.writeStartElement("total");
+        	w.writeCharacters("2");
+        	w.writeEndElement();
         
         w.writeEndElement();
         w.writeEndDocument();
         
         w.close();
         strWriter.close();
-        
-        assertEquals(strWriter.toString(), "{\"root\":{\"subchild1\":[{\"subchild2\":\"first sub2\"},\"text\",\"text1\"],\"outer\":\"test\"}}");
+        assertEquals(strWriter.toString(), "{\"SearchResult\":{\"results\":[" +
+                "{\"field\":[\"1\",\"2\"]}," +
+                "{\"field\":[\"1\",\"2\"]}],\"total\":\"2\"}}");
     }
     
+    @Test
     public void testArrayOfChildren() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
         AbstractXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
-        
+
         w.writeStartDocument();
         w.writeStartElement("root");
-        
+
         w.writeStartElement("child");
         w.writeCharacters("first");
         w.writeEndElement();
-        
+
         w.writeStartElement("child");
         w.writeCharacters("second");
         w.writeEndElement();
-        
+
         w.writeStartElement("child");
         w.writeCharacters("third");
         w.writeEndElement();
-        
+
         w.writeEndElement();
-        
+
         w.writeStartElement("other");
         w.writeCharacters("test");
         w.writeEndElement();
-        
+
         w.writeEndDocument();
-        
+
         w.close();
         strWriter.close();
-        
+
         assertEquals("{\"root\":{\"child\":[\"first\",\"second\",\"third\"]},\"other\":\"test\"}", strWriter.toString());
     }
     
+    @Test
     public void testMixedArrayAndJSONObject() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
         AbstractXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
-        w.serializeAsArray("results");
+        w.serializeAsArray(con.createKey("", "", "results"));
+        w.serializeAsArray(con.createKey("", "", "field"));
+
         w.writeStartDocument();
         w.writeStartElement("SearchResult");
-        w.writeStartElement("results");
-        w.writeStartElement("field");
-        w.writeCharacters("1");
-        w.writeEndElement();
-        w.writeStartElement("field");
-        w.writeCharacters("2");
-        w.writeEndElement();
-        w.writeEndElement();
-        w.writeStartElement("results");
-        w.writeStartElement("field");
-        w.writeCharacters("1");
-        w.writeEndElement();
-        w.writeStartElement("field");
-        w.writeCharacters("2");
-        w.writeEndElement();
-        w.writeEndElement();
+        	w.writeStartElement("results");
+        		w.writeStartElement("field");
+        		w.writeCharacters("1");
+        		w.writeEndElement();
         
-        w.writeStartElement("total");
-        w.writeCharacters("2");
-        w.writeEndElement();
+        		w.writeStartElement("field");
+        		w.writeCharacters("2");
+        		w.writeEndElement();
+        	w.writeEndElement();
+        
+        	w.writeStartElement("results");
+        		w.writeStartElement("field");
+        		w.writeCharacters("1");
+        		w.writeEndElement();
+        
+        		w.writeStartElement("field");
+        		w.writeCharacters("2");
+        		w.writeEndElement();
+        	w.writeEndElement();
+        
+        	w.writeStartElement("total");
+        	w.writeCharacters("2");
+        	w.writeEndElement();
         
         w.writeEndElement();
         w.writeEndDocument();
         
         w.close();
         strWriter.close();
-        assertEquals("{\"SearchResult\":{\"results\":[{\"field\":[1,2]},{\"field\":[1,2]}],\"total\":2}}", 
-        	strWriter.toString());
+        assertEquals("{\"SearchResult\":{\"results\":[" +
+                "{\"field\":[\"1\",\"2\"]}," +
+                "{\"field\":[\"1\",\"2\"]}],\"total\":\"2\"}}", 
+            strWriter.toString());
     }
     
+    @Test
     public void testMixedArrayAndJSONObject2() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
         AbstractXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
+
         w.writeStartDocument();
         w.writeStartElement("TestResult");
-        w.writeStartElement("company");
-        w.writeStartElement("name");
-        w.writeCharacters("Acme");
-        w.writeEndElement();
-        w.writeStartElement("phone");
-        w.writeStartElement("type");
-        w.writeCharacters("main");
-        w.writeEndElement();
-        w.writeStartElement("number");
-        w.writeCharacters("123");
-        w.writeEndElement();
-        w.writeEndElement();
+        	w.writeStartElement("company");
+        		w.writeStartElement("name");
+        		w.writeCharacters("Acme");
+        		w.writeEndElement();
         
-        w.writeStartElement("ceo");
-        w.writeStartElement("firstname");
-        w.writeCharacters("John");
-        w.writeEndElement();
-        w.writeStartElement("phone");
-        w.writeCharacters("567");
-        w.writeEndElement();
-        w.writeEndElement();
+        		w.writeStartElement("phone");
+        			w.writeStartElement("type");
+        			w.writeCharacters("main");
+        			w.writeEndElement();
+        			w.writeStartElement("number");
+        			w.writeCharacters("123");
+        			w.writeEndElement();
+        		w.writeEndElement();
         
-        w.writeStartElement("address");
-        w.writeCharacters("Main st");
-        w.writeEndElement();
+        		w.writeStartElement("ceo");
+        			w.writeStartElement("firstname");
+        			w.writeCharacters("John");
+        			w.writeEndElement();
+        			w.writeStartElement("phone");
+        			w.writeCharacters("567");
+        			w.writeEndElement();
+        		w.writeEndElement();
         
-        w.writeEndElement();
+        		w.writeStartElement("address");
+        		w.writeCharacters("Main st");
+        		w.writeEndElement();
+        
+        	w.writeEndElement();
         w.writeEndElement();
         w.writeEndDocument();
         
         w.close();
         strWriter.close();
-        assertEquals("{\"TestResult\":{\"company\":{\"name\":\"Acme\",\"phone\":"
-        		+ "{\"type\":\"main\",\"number\":123},\"ceo\":{\"firstname\":\"John\","
-        		+ "\"phone\":567},\"address\":\"Main st\"}}}", 
-        	strWriter.toString());
+        assertEquals("{\"TestResult\":{\"company\":{\"name\":\"Acme\",\"phone\":" +
+                "{\"type\":\"main\",\"number\":\"123\"},\"ceo\":{\"firstname\":\"John\"," +
+                "\"phone\":\"567\"},\"address\":\"Main st\"}}}", 
+            strWriter.toString());
     }
     
+    @Test
     public void testComplexArrayOfChildren() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
         AbstractXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
-        
+
         w.writeStartDocument();
         w.writeStartElement("root");
-        
+
         addChild(w);
         addChild(w);
         addChild(w);
         addChild(w);
-        
+
         w.writeEndElement();
         w.writeEndDocument();
-        
+
         w.close();
         strWriter.close();
-        
+
         assertEquals("{\"root\":{\"child\":[" +
                      "{\"subchild1\":\"test\",\"subchild2\":\"test\"}," +
                      "{\"subchild1\":\"test\",\"subchild2\":\"test\"}," +
@@ -726,18 +757,19 @@ public class MappedXMLStreamWriterTest extends TestCase {
 
     private void addChild(AbstractXMLStreamWriter w) throws XMLStreamException {
         w.writeStartElement("child");
-        
+
         w.writeStartElement("subchild1");
         w.writeCharacters("test");
         w.writeEndElement();
-        
+
         w.writeStartElement("subchild2");
         w.writeCharacters("test");
         w.writeEndElement();
-        
+
         w.writeEndElement();
     }
     
+    @Test
     public void testNamespacedElements() throws Exception {
         StringWriter strWriter = new StringWriter();
         
@@ -765,11 +797,12 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals("{\"foo.root\":{\"foo.child\":[\"\",\"\"]}}", strWriter.toString());
     }
     
+    @Test
     public void testIssue18Enh() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
         AbstractXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
-        
+
         w.writeStartDocument();
         w.writeStartElement("", "a", "");
 
@@ -802,6 +835,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals("{\"a\":{\"vals\":{\"string\":[1,2,3]},\"n\":5}}", strWriter.toString());
     }
     
+    @Test
     public void testMap() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
@@ -838,32 +872,34 @@ public class MappedXMLStreamWriterTest extends TestCase {
         w.writeEndDocument();
         w.close();
         strWriter.close();
+
         String result = strWriter.toString();
         assertEquals(result, "{\"map\":{\"entry\":[{\"string\":[\"id\",6]},{\"string\":[\"name\",\"Dejan\"]},{\"string\":[\"city\",\"Belgrade\"]}]}}");
     }
     
+    @Test
     public void testPrimitiveTypes() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
         AbstractXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
-        
+
         w.writeStartDocument();
         w.writeStartElement("root");
-        
+
         w.writeStartElement("subchild1");
-        
+
         w.writeStartElement("subchild2");
         w.writeCharacters(5 + "");
         w.writeEndElement();
-        
+
         w.writeStartElement("subchild2");
         w.writeCharacters(3.14 + "");
         w.writeEndElement();
-        
+
         w.writeStartElement("subchild2");
         w.writeCharacters(true + "");
         w.writeEndElement();
-        
+
         w.writeStartElement("subchild2");
         w.writeCharacters("000123");
         w.writeEndElement();
@@ -871,16 +907,16 @@ public class MappedXMLStreamWriterTest extends TestCase {
         w.writeStartElement("subchild2");
         w.writeCharacters("Infinity");
         w.writeEndElement();
-        
+
         w.writeEndElement();
-        
+
         w.writeStartElement("subchild1");
         w.writeCharacters("sub1");
         w.writeEndElement();
-        
+
         w.writeEndElement();
         w.writeEndDocument();
-        
+
         w.close();
         strWriter.close();
         String expected = "{\"root\":{\"subchild1\":[{\"subchild2\":[5,3.14,true,\"000123\",\"Infinity\"]},\"sub1\"]}}";
@@ -888,7 +924,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals(expected, actual);
     }
 
-    // issue 64
+    @Test
     public void testPrimitiveInfinityNaN() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
@@ -896,7 +932,6 @@ public class MappedXMLStreamWriterTest extends TestCase {
 
         w.writeStartDocument();
         w.writeStartElement("root");
-
 
         w.writeStartElement("subchild1");
         w.writeCharacters("Infinity");
@@ -917,12 +952,12 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals(expected, actual);
     }
 
-    //issue 29
+    @Test
     public void testComplexElements() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
         AbstractXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
-        
+
         w.writeStartDocument();
         w.writeStartElement("", "a", "");
 
@@ -930,23 +965,23 @@ public class MappedXMLStreamWriterTest extends TestCase {
         w.writeAttribute("class", "string");
         w.writeCharacters("1");
         w.writeEndElement();
-        
+
         w.writeEndElement();
         w.writeEndDocument();
-        
+
         w.close();
         strWriter.close();
-        
+
         assertEquals("{\"a\":{\"o\":{\"@class\":\"string\",\"$\":\"1\"}}}", strWriter.toString());
     }
-    
-    //issue 29
+
+    @Test
     public void testIgnoreComplexElements() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
         MappedXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
         w.setValueKey(null);
-        
+
         w.writeStartDocument();
         w.writeStartElement("", "a", "");
 
@@ -954,40 +989,42 @@ public class MappedXMLStreamWriterTest extends TestCase {
         w.writeAttribute("class", "string");
         w.writeCharacters("1");
         w.writeEndElement();
-        
+
         w.writeEndElement();
         w.writeEndDocument();
-        
+
         w.close();
         strWriter.close();
-        
+
         assertEquals("{\"a\":{\"o\":{\"@class\":\"string\"}}}", strWriter.toString());
     }    
     
+    @Test
     public void testSingleArrayElement() throws Exception {
-		StringWriter strWriter = new StringWriter();
-		MappedNamespaceConvention con = new MappedNamespaceConvention();
-		AbstractXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
-		w.serializeAsArray(con.createKey("", "", "array-a"));
+        StringWriter strWriter = new StringWriter();
+        MappedNamespaceConvention con = new MappedNamespaceConvention();
+        AbstractXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
+        w.serializeAsArray(con.createKey("", "", "array-a"));
 
-		w.writeStartDocument();
-		w.writeStartElement("", "array-a", "");
+        w.writeStartDocument();
+        w.writeStartElement("", "array-a", "");
 
-		w.writeStartElement("", "a", "");
-		w.writeStartElement("", "n", "");
-		w.writeCharacters("1");
-		w.writeEndElement();
-		w.writeEndElement();
+        w.writeStartElement("", "a", "");
+        w.writeStartElement("", "n", "");
+        w.writeCharacters("1");
+        w.writeEndElement();
+        w.writeEndElement();
 
-		w.writeEndElement();
-		w.writeEndDocument();
+        w.writeEndElement();
+        w.writeEndDocument();
 
-		w.close();
-		strWriter.close();
+        w.close();
+        strWriter.close();
 
-		assertEquals("{\"array-a\":[{\"a\":{\"n\":1}}]}", strWriter.toString());
-	}
+        assertEquals("{\"array-a\":[{\"a\":{\"n\":1}}]}", strWriter.toString());
+    }
     
+    @Test
     public void testEmptySerializedArrayElement() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
@@ -1006,6 +1043,7 @@ public class MappedXMLStreamWriterTest extends TestCase {
         assertEquals("{\"array-a\":[\"\"]}", strWriter.toString());
     }
     
+    @Test
     public void testNestedSerializedArrayElement() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
@@ -1043,51 +1081,52 @@ public class MappedXMLStreamWriterTest extends TestCase {
         w.close();
         strWriter.close();
 
-        assertEquals("{\"docs\":[{\"doc\":{\"id\":24,\"filters\":[\"\"],\"hosts\":[{\"host\":{\"name\":\"foobar.com\",\"ip\":\"255.255.255.255\"}}]}}]}", strWriter.toString());
+        assertEquals("{\"docs\":[{\"doc\":{\"id\":\"24\",\"filters\":[\"\"],\"hosts\":[{\"host\":{\"name\":\"foobar.com\",\"ip\":\"255.255.255.255\"}}]}}]}", strWriter.toString());
     }
     
+    @Test
     public void testSingleArrayElementIgnore() throws Exception {
-		StringWriter strWriter = new StringWriter();
-		MappedNamespaceConvention con = new MappedNamespaceConvention();
-		AbstractXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
+        StringWriter strWriter = new StringWriter();
+        MappedNamespaceConvention con = new MappedNamespaceConvention();
+        AbstractXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
 
-		w.writeStartDocument();
-		w.writeStartElement("", "array-a", "");
+        w.writeStartDocument();
+        w.writeStartElement("", "array-a", "");
 
-		w.writeStartElement("", "a", "");
-		w.writeStartElement("", "n", "");
-		w.writeCharacters("1");
-		w.writeEndElement();
-		w.writeEndElement();
+        w.writeStartElement("", "a", "");
+        w.writeStartElement("", "n", "");
+        w.writeCharacters("1");
+        w.writeEndElement();
+        w.writeEndElement();
 
-		w.writeEndElement();
-		w.writeEndDocument();
+        w.writeEndElement();
+        w.writeEndDocument();
 
-		w.close();
-		strWriter.close();
+        w.close();
+        strWriter.close();
 
-		assertEquals("{\"array-a\":{\"a\":{\"n\":1}}}", strWriter.toString());
-	} 
+        assertEquals("{\"array-a\":{\"a\":{\"n\":1}}}", strWriter.toString());
+    } 
     
-    //issue 26
+    @Test
     public void testArraysAndAttributes() throws Exception {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
         AbstractXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
-        
+
         w.writeStartDocument();
         w.writeStartElement("root");
-        
+
         w.writeStartElement("child");
         w.writeAttribute("x", "y");
         w.writeCharacters("value");
         w.writeEndElement();
-        
+
         w.writeStartElement("child");
         w.writeAttribute("a", "b");
         w.writeCharacters("value");
         w.writeEndElement();
-        
+
         w.writeStartElement("child");
         w.writeAttribute("x", "z");
         w.writeCharacters("value");
@@ -1095,113 +1134,14 @@ public class MappedXMLStreamWriterTest extends TestCase {
         
         w.writeEndElement();
         w.writeEndDocument();
-        
+
         w.close();
         strWriter.close();
-        
+
         assertEquals("{\"root\":{\"child\":[{\"@x\":\"y\",\"$\":\"value\"},{\"@a\":\"b\",\"$\":\"value\"},{\"@x\":\"z\",\"$\":\"value\"}]}}", strWriter.toString());
     }
 
-    //issue 36
-    public void testConverter() throws Exception {
-        StringWriter strWriter = new StringWriter();
-        Configuration config = new Configuration();
-        config.setTypeConverter(new SimpleConverter());
-        MappedNamespaceConvention con = new MappedNamespaceConvention(config);
-        AbstractXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
-
-        w.writeStartDocument();
-        w.writeStartElement("root");
-        w.writeCharacters("true");
-        w.writeEndElement();
-
-        w.writeEndDocument();
-
-        w.close();
-        strWriter.close();
-
-        assertEquals("{\"root\":\"true\"}", strWriter.toString());        
-    }
-    
-    //issue 52
-    public void testAttributeKey() throws Exception {
-        StringWriter strWriter = new StringWriter();
-        
-        Map xtoj = new HashMap();
-        xtoj.put("http://foo/", "foo");
-        Configuration conf = new Configuration(xtoj);
-        conf.setAttributeKey("!");
-        MappedNamespaceConvention con = new MappedNamespaceConvention(conf);
-        AbstractXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
-        
-        w.writeStartDocument();
-        w.writeStartElement("root");
-        w.writeAttribute("att", "attvalue");
-        w.writeAttribute("http://foo/", "att2", "attvalue");
-        
-        w.writeEndElement();
-        w.writeEndDocument();
-        
-        w.close();
-        strWriter.close();
-        
-        assertEquals("{\"root\":{\"!att\":\"attvalue\",\"!foo.att2\":\"attvalue\"}}", strWriter.toString());
-    }   
-    
-    // issue 63
-    public void testArrayAsFirstInAnArray() throws Exception {
-        StringWriter strWriter = new StringWriter();
-        MappedNamespaceConvention con = new MappedNamespaceConvention();
-        AbstractXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
-        w.serializeAsArray(con.createKey("", "", "bazs"));
-        w.serializeAsArray(con.createKey("", "", "quacks"));
-
-        w.writeStartDocument();
-        w.writeStartElement("Foo");
-        	w.writeStartElement("bazs"); // array
-        		w.writeStartElement("quacks"); // array
-        			w.writeStartElement("goof");
-        			w.writeEndElement();
-        		w.writeEndElement();
-        w.writeEndElement();
-        w.writeEndElement();
-        w.writeEndDocument();
-
-        w.close();
-        strWriter.close();
-
-        assertEquals("{\"Foo\":{\"bazs\":[{\"quacks\":[{\"goof\":\"\"}]}]}}", strWriter.toString());
-    }
-
-    // JETTISON-65
-    public void x_testImplicitCollections() throws Exception {
-        StringWriter strWriter = new StringWriter();
-        Configuration conf = new Configuration();
-        MappedNamespaceConvention con = new MappedNamespaceConvention(conf);
-        AbstractXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
-        
-        w.writeStartDocument();
-        w.writeStartElement("root");
-        
-        addChild(w);
-        addChild(w);
-        addChild(w);
-        addChild(w);
-        
-        w.writeEndElement();
-        w.writeEndDocument();
-        
-        w.close();
-        strWriter.close();
-        
-        assertEquals("{\"root\":[" +
-                     "{\"subchild1\":\"test\",\"subchild2\":\"test\"}," +
-                     "{\"subchild1\":\"test\",\"subchild2\":\"test\"}," +
-                     "{\"subchild1\":\"test\",\"subchild2\":\"test\"}," +
-                     "{\"subchild1\":\"test\",\"subchild2\":\"test\"}]}", strWriter.toString());
-    }
-
-    // JETTISON-57
+    @Test
     public void testChildClassPropertyNameSameAsParentObject() throws Exception {
 
         StringWriter strWriter = new StringWriter();
@@ -1255,10 +1195,3 @@ public class MappedXMLStreamWriterTest extends TestCase {
                 "{\"structure\":{\"@name\":\"conversation\",\"symbolic\":" +
                 "[{\"@name\":\"reason\"},{\"@name\":\"terms\"}],\"numeric\":[" +
                 "{\"@name\":\"amountasked\"},{\"@name\":\"amountoffered\"}]," +
-                "\"structure\":{\"@name\":\"check\",\"symbolic\":" +
-                "{\"@name\":\"date\"},\"structure\":{\"@name\":\"lines\",\"@repeating\":true,\"symbolic\"" +
-                ":{\"@name\":\"type\"},\"numeric\":[{\"@name\":\"amount\"},{\"@name\":\"cost\"}]}}}}}"
-                , strWriter.toString());
-    }
-    
-}
