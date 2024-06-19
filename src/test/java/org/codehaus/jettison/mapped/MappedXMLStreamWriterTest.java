@@ -551,8 +551,8 @@ public class MappedXMLStreamWriterTest {
         
         w.close();
         strWriter.close();
-        
-        assertEquals("{\"root\":{\"subchild1\":[{\"subchild2\":\"first sub2\"},{\"subchild2\":{\"subchild3\":[\"first sub3\",\"second sub3\"]},\"third sub2\"},\"sub1\"]}}"
+
+        assertEquals("{\"root\":{\"subchild1\":[{\"subchild2\":[\"first sub2\",{\"subchild3\":[\"first sub3\",\"second sub3\"]},\"third sub2\"]},\"sub1\"]}}"
 , strWriter.toString());
     }
     
@@ -561,44 +561,37 @@ public class MappedXMLStreamWriterTest {
         StringWriter strWriter = new StringWriter();
         MappedNamespaceConvention con = new MappedNamespaceConvention();
         AbstractXMLStreamWriter w = new MappedXMLStreamWriter(con, strWriter);
-        w.serializeAsArray(con.createKey("", "", "results"));
-        w.serializeAsArray(con.createKey("", "", "symbolic"));
-        w.serializeAsArray(con.createKey("", "", "numeric"));
 
         w.writeStartDocument();
-        w.writeStartElement("SearchResult");
-        	w.writeStartElement("results");
-        		w.writeStartElement("field");
-        		w.writeCharacters("1");
-        		w.writeEndElement();
-        
-        		w.writeStartElement("field");
-        		w.writeCharacters("2");
-        		w.writeEndElement();
-        	w.writeEndElement();
-        
-        	w.writeStartElement("results");
-        		w.writeStartElement("field");
-        		w.writeCharacters("1");
-        		w.writeEndElement();
-        
-        		w.writeStartElement("field");
-        		w.writeCharacters("2");
-        		w.writeEndElement();
-        	w.writeEndElement();
-        
-        	w.writeStartElement("total");
-        	w.writeCharacters("2");
-        	w.writeEndElement();
-        
+        w.writeStartElement("root");
+
+        w.writeStartElement("subchild1");
+
+        w.writeStartElement("subchild2");
+        w.writeCharacters("first sub2");
+        w.writeEndElement();
+
+        w.writeEndElement();
+
+        w.writeStartElement("subchild1");
+        w.writeCharacters("text");
+        w.writeEndElement();
+
+        w.writeStartElement("subchild1");
+        w.writeCharacters("text1");
+        w.writeEndElement();
+
+        w.writeStartElement("outer");
+        w.writeCharacters("test");
+        w.writeEndElement();
+
         w.writeEndElement();
         w.writeEndDocument();
-        
+
         w.close();
         strWriter.close();
-        assertEquals(strWriter.toString(), "{\"SearchResult\":{\"results\":[" +
-                "{\"field\":[\"1\",\"2\"]}," +
-                "{\"field\":[\"1\",\"2\"]}],\"total\":\"2\"}}");
+
+        assertEquals(strWriter.toString(), "{\"root\":{\"subchild1\":[{\"subchild2\":\"first sub2\"},\"text\",\"text1\"],\"outer\":\"test\"}}");
     }
     
     @Test
@@ -675,10 +668,8 @@ public class MappedXMLStreamWriterTest {
         
         w.close();
         strWriter.close();
-        assertEquals("{\"SearchResult\":{\"results\":[" +
-                "{\"field\":[\"1\",\"2\"]}," +
-                "{\"field\":[\"1\",\"2\"]}],\"total\":\"2\"}}", 
-            strWriter.toString());
+        assertEquals("{\"SearchResult\":{\"results\":[{\"field\":[1,2]},{\"field\":[1,2]}],\"total\":2}}",
+                strWriter.toString());
     }
     
     @Test
@@ -722,10 +713,10 @@ public class MappedXMLStreamWriterTest {
         
         w.close();
         strWriter.close();
-        assertEquals("{\"TestResult\":{\"company\":{\"name\":\"Acme\",\"phone\":" +
-                "{\"type\":\"main\",\"number\":\"123\"},\"ceo\":{\"firstname\":\"John\"," +
-                "\"phone\":\"567\"},\"address\":\"Main st\"}}}", 
-            strWriter.toString());
+        assertEquals("{\"TestResult\":{\"company\":{\"name\":\"Acme\",\"phone\":"
+                        + "{\"type\":\"main\",\"number\":123},\"ceo\":{\"firstname\":\"John\","
+                        + "\"phone\":567},\"address\":\"Main st\"}}}",
+                strWriter.toString());
     }
     
     @Test
@@ -1055,14 +1046,14 @@ public class MappedXMLStreamWriterTest {
         w.writeStartDocument();
         w.writeStartElement("", "docs", "");
         w.writeStartElement("", "doc", "");
-        
+
         w.writeStartElement("", "id", "");
         w.writeCharacters("24");
         w.writeEndElement();
-        
+
         w.writeStartElement("", "filters", "");
         w.writeEndElement();
-        
+
         w.writeStartElement("", "hosts", "");
         w.writeStartElement("", "host", "");
         w.writeStartElement("", "name", "");
@@ -1081,7 +1072,7 @@ public class MappedXMLStreamWriterTest {
         w.close();
         strWriter.close();
 
-        assertEquals("{\"docs\":[{\"doc\":{\"id\":\"24\",\"filters\":[\"\"],\"hosts\":[{\"host\":{\"name\":\"foobar.com\",\"ip\":\"255.255.255.255\"}}]}}]}", strWriter.toString());
+        assertEquals("{\"docs\":[{\"doc\":{\"id\":24,\"filters\":[\"\"],\"hosts\":[{\"host\":{\"name\":\"foobar.com\",\"ip\":\"255.255.255.255\"}}]}}]}", strWriter.toString());
     }
     
     @Test
@@ -1195,3 +1186,10 @@ public class MappedXMLStreamWriterTest {
                 "{\"structure\":{\"@name\":\"conversation\",\"symbolic\":" +
                 "[{\"@name\":\"reason\"},{\"@name\":\"terms\"}],\"numeric\":[" +
                 "{\"@name\":\"amountasked\"},{\"@name\":\"amountoffered\"}]," +
+                        "\"structure\":{\"@name\":\"check\",\"symbolic\":" +
+                        "{\"@name\":\"date\"},\"structure\":{\"@name\":\"lines\",\"@repeating\":true,\"symbolic\"" +
+                        ":{\"@name\":\"type\"},\"numeric\":[{\"@name\":\"amount\"},{\"@name\":\"cost\"}]}}}}}"
+                , strWriter.toString());
+    }
+
+}

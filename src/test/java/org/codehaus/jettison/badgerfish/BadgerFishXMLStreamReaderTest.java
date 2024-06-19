@@ -1,9 +1,14 @@
+package org.codehaus.jettison.badgerfish;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.codehaus.jettison.AbstractXMLStreamReader;
 import org.codehaus.jettison.badgerfish.BadgerFishXMLStreamReader;
 import org.codehaus.jettison.json.JSONObject;
+
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 public class BadgerFishXMLStreamReaderTest {
 

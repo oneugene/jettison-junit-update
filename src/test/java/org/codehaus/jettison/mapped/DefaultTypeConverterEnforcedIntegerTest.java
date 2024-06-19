@@ -15,6 +15,7 @@
  */
 package org.codehaus.jettison.mapped;
 
+import org.codehaus.jettison.AbstractXMLStreamWriter;
 import org.junit.jupiter.api.Test;
 
 import java.io.StringWriter;

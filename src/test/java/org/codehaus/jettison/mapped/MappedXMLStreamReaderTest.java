@@ -469,6 +469,12 @@ public class MappedXMLStreamReaderTest {
         Assertions.assertEquals(XMLStreamReader.END_ELEMENT, reader.next());
         Assertions.assertEquals("Name", reader.getName().getLocalPart());
 
+        Assertions.assertEquals(XMLStreamReader.END_ELEMENT, reader.next());
+        Assertions.assertEquals("theBook", reader.getName().getLocalPart());
+
+        Assertions.assertEquals(XMLStreamReader.START_ELEMENT, reader.next());
+        Assertions.assertEquals("theBook", reader.getName().getLocalPart());
+
         Assertions.assertEquals(XMLStreamReader.START_ELEMENT, reader.next());
         Assertions.assertEquals("Bar", reader.getName().getLocalPart());
 
@@ -497,7 +503,7 @@ public class MappedXMLStreamReaderTest {
                 + " ] "
                 + "}}");
         // Expected XML
-        String expXml = "<root>"
+        String expXml = "<root><root>"
                 + "<relationships>friend</relationships>"
                 + "<emails>"
                 + "<value>f@foo.com</value>"
@@ -505,7 +511,7 @@ public class MappedXMLStreamReaderTest {
                 + "<emails>"
                 + "<value>b@bar.com</value>"
                 + "</emails>"
-                + "</root>";
+                + "</root></root>";
 
         doTestEvents(obj.toString(), expXml);
     }
@@ -527,12 +533,12 @@ public class MappedXMLStreamReaderTest {
                 + "}");
 
         // Expected XML
-        String expXml = "<root>"
+        String expXml = "<root><root>"
                 + "<relationship>friend</relationship>"
-                + "<email>f@foo.com</email>"
-                + "<relationship>relative</relationship>"
+                + "<email>f@foo.com</email></root>"
+                + "<root><relationship>relative</relationship>"
                 + "<email>b@foo.com</email>"
-                + "</root>";
+                + "</root></root>";
 
         doTestEvents(obj.toString(), expXml);
     }

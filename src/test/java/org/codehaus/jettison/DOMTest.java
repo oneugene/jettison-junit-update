@@ -1,3 +1,5 @@
+package org.codehaus.jettison;
+
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
@@ -11,8 +13,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.StringReader;
 import java.io.StringWriter;
-
-package com.example;
 
 public abstract class DOMTest {
 
@@ -41,10 +41,5 @@ public abstract class DOMTest {
         DOMSource source = new DOMSource(doc);
         trans.transform(source, result);
         return sw.toString().trim();
-    }
-
-    @Test
-    public void test() throws Exception {
-        // Add test cases here
     }
 }

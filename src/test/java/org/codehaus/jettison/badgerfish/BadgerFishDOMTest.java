@@ -22,6 +22,8 @@ import org.codehaus.jettison.DOMTest;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * Test BadgerFish DOM API
  * 

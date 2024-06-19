@@ -4,6 +4,9 @@ import org.codehaus.jettison.AbstractXMLStreamWriter;
 
 import java.io.StringWriter;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 public class DefaultTypeConverterUnenforcedIntegerTest {
 
     /**

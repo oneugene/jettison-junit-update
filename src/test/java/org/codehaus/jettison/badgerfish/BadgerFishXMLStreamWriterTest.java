@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import org.codehaus.jettison.AbstractXMLStreamWriter;
 import org.codehaus.jettison.badgerfish.BadgerFishXMLStreamWriter;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class BadgerFishXMLStreamWriterTest {
 
     @Test

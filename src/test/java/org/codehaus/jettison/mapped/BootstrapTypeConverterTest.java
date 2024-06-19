@@ -1,3 +1,6 @@
+package org.codehaus.jettison.mapped;
+
+import org.codehaus.jettison.AbstractXMLStreamWriter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
