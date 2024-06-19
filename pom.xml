@@ -15,17 +15,23 @@
   </licenses>
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.2</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.8.0</version>
       <scope>test</scope>
     </dependency>
-	<dependency> 
-		<groupId>com.fasterxml.woodstox</groupId>
-		<artifactId>woodstox-core</artifactId>
-		<version>6.5.1</version>
-		<scope>test</scope>
-	</dependency>    
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.8.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency> 
+      <groupId>com.fasterxml.woodstox</groupId>
+      <artifactId>woodstox-core</artifactId>
+      <version>6.5.1</version>
+      <scope>test</scope>
+    </dependency>    
   </dependencies>
   <scm>
     <connection>scm:git:http://github.com/jettison-json/jettison.git</connection>
@@ -34,17 +40,16 @@
     <tag>HEAD</tag>
   </scm>
   <distributionManagement>
-      <snapshotRepository>
-          <id>ossrh</id>
-          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-      </snapshotRepository>
-      <repository>
-          <id>ossrh</id>
-          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-      </repository>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
   </distributionManagement>
   <build>
-    
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -80,15 +85,15 @@
         </configuration>
       </plugin>
       <plugin>
-          <groupId>org.sonatype.plugins</groupId>
-          <artifactId>nexus-staging-maven-plugin</artifactId>
-          <version>1.6.13</version>
-          <extensions>true</extensions>
-          <configuration>
-              <serverId>ossrh</serverId>
-              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-              <autoReleaseAfterClose>true</autoReleaseAfterClose>
-          </configuration>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.13</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.felix</groupId>
@@ -96,90 +101,95 @@
         <extensions>true</extensions>
         <version>5.1.9</version>
         <configuration>
-         <instructions>
-           <Bundle-Name>${project.artifactId}</Bundle-Name>
-           <Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
-           <Export-Package>org.codehaus.jettison*;version=${project.version}</Export-Package>
-           <Import-Package>javax.xml,*</Import-Package>
-           <Implementation-Title>${project.name}</Implementation-Title>
-           <Implementation-Version>${project.version}</Implementation-Version>
-           <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy>
-           <_nouses>true</_nouses>
-         </instructions>
+          <instructions>
+            <Bundle-Name>${project.artifactId}</Bundle-Name>
+            <Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
+            <Export-Package>org.codehaus.jettison*;version=${project.version}</Export-Package>
+            <Import-Package>javax.xml,*</Import-Package>
+            <Implementation-Title>${project.name}</Implementation-Title>
+            <Implementation-Version>${project.version}</Implementation-Version>
+            <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy>
+            <_nouses>true</_nouses>
+          </instructions>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.22.0</version>
       </plugin>
     </plugins>
     <pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>3.0.1</version>
-                <configuration>
-                    <useReleaseProfile>false</useReleaseProfile>
-                    <preparationGoals>clean install</preparationGoals>
-                    <goals>deploy</goals>
-                    <arguments>-Prelease</arguments>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                </configuration>
-            </plugin>
-        </plugins>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>3.0.1</version>
+          <configuration>
+            <useReleaseProfile>false</useReleaseProfile>
+            <preparationGoals>clean install</preparationGoals>
+            <goals>deploy</goals>
+            <arguments>-Prelease</arguments>
+            <autoVersionSubmodules>true</autoVersionSubmodules>
+          </configuration>
+        </plugin>
+      </plugins>
     </pluginManagement>
   </build>
   <profiles>
-      <profile>
-          <id>release</id>
-          <build>
-              <plugins>
-                  <!-- We want to deploy the artifact to a staging location for perusal -->
-                  <plugin>
-                      <inherited>true</inherited>
-                      <artifactId>maven-deploy-plugin</artifactId>
-                      <version>3.1.1</version>
-                      <configuration>
-                          <altDeploymentRepository>${deploy.altRepository}</altDeploymentRepository>
-                          <updateReleaseInfo>true</updateReleaseInfo>
-                      </configuration>
-                  </plugin>
-                  <!-- We want to sign the artifact, the POM, and all attached artifacts -->
-                  <plugin>
-                      <artifactId>maven-gpg-plugin</artifactId>
-                      <version>3.1.0</version>
-                      <executions>
-                          <execution>
-                              <goals>
-                                  <goal>sign</goal>
-                              </goals>
-                          </execution>
-                      </executions>
-                  </plugin>
-                  <plugin>
-                      <groupId>org.apache.maven.plugins</groupId>
-                      <artifactId>maven-source-plugin</artifactId>
-                      <executions>
-                          <execution>
-                              <id>attach-sources</id>
-                              <goals>
-                                  <goal>jar-no-fork</goal>
-                              </goals>
-                          </execution>
-                      </executions>
-                  </plugin>
-                  <plugin>
-                      <groupId>org.apache.maven.plugins</groupId>
-                      <artifactId>maven-javadoc-plugin</artifactId>
-                      <executions>
-                          <execution>
-                              <id>attach-javadocs</id>
-                              <goals>
-                                  <goal>jar</goal>
-                              </goals>
-                          </execution>
-                      </executions>
-                  </plugin>
-              </plugins>
-          </build>
-      </profile>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <!-- We want to deploy the artifact to a staging location for perusal -->
+          <plugin>
+            <inherited>true</inherited>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <version>3.1.1</version>
+            <configuration>
+              <altDeploymentRepository>${deploy.altRepository}</altDeploymentRepository>
+              <updateReleaseInfo>true</updateReleaseInfo>
+            </configuration>
+          </plugin>
+          <!-- We want to sign the artifact, the POM, and all attached artifacts -->
+          <plugin>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.1.0</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
   <reporting>
     <plugins>
@@ -201,9 +211,9 @@
     </plugins>
   </reporting>
   <developers>
-      <developer>
-          <name>The Jettison Team</name>
-          <url>https://github.com/jettison-json/jettison</url>
-      </developer>
+    <developer>
+      <name>The Jettison Team</name>
+      <url>https://github.com/jettison-json/jettison</url>
+    </developer>
   </developers>
 </project>
