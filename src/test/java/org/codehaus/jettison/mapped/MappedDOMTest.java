@@ -42,41 +42,41 @@ public class MappedDOMTest extends DOMTest {
 		String xmlStr = "<kermit>the frog</kermit>";
 		String expStr = "{\"kermit\":\"the frog\"}";
 		String resStr = toJSON(parse(xmlStr), false);
-		assertEquals("Unexpected result: " + resStr, expStr, resStr);
+		assertEquals(expStr, resStr, "Unexpected result: " + resStr);
 
 		String resXML = toXML(resStr, false);
-		assertEquals("Unexpected result: " + resXML, xmlStr, resXML);
+		assertEquals(xmlStr, resXML, "Unexpected result: " + resXML);
 	}
 
 	public void testSimpleAttribute() throws Exception {
 		String xmlStr = "<kermit mygirl=\"piggy\">the frog</kermit>";
 		String expStr = "{\"kermit\":{\"@mygirl\":\"piggy\",\"$\":\"the frog\"}}";
 		String resStr = toJSON(parse(xmlStr), false);
-		assertEquals("Unexpected result: " + resStr, expStr, resStr);
+		assertEquals(expStr, resStr, "Unexpected result: " + resStr);
 
 		String resXML = toXML(resStr, false);
-		assertEquals("Unexpected result: " + resXML, xmlStr, resXML);
+		assertEquals(xmlStr, resXML, "Unexpected result: " + resXML);
 	}
 
 	public void testDefaultNamespace() throws Exception {
 		String xmlStr = "<kermit xmlns=\"http://somens\">the frog</kermit>";
 		String expStr = "{\"somens.kermit\":\"the frog\"}";
 		String resStr = toJSON(parse(xmlStr), false);
-		assertEquals("Unexpected result: " + resStr, expStr, resStr);
+		assertEquals(expStr, resStr, "Unexpected result: " + resStr);
 
 		String resXML = toXML(resStr, false);
-		assertEquals("Unexpected result: " + resXML, xmlStr, resXML);
+		assertEquals(xmlStr, resXML, "Unexpected result: " + resXML);
 	}
 	
 	public void testIgnoreNamespaces() throws Exception {
         String xmlStr = "<A xmlns=\"http://foo\"><B xmlns:bar=\"http://baz\" bar:c=\"1\">2</B></A>";
         String expStr = "{\"A\":{\"B\":{\"@c\":1,\"$\":\"2\"}}}";
         String resStr = toJSON(parse(xmlStr), true);
-        assertEquals("Unexpected result: " + resStr, expStr, resStr);
+        assertEquals(expStr, resStr, "Unexpected result: " + resStr);
         resStr="{\"somens.kermit\":\"the frog\"}";
         String resXML = toXML(resStr, true);
         xmlStr = "<kermit>the frog</kermit>";
-        assertEquals("Unexpected result: " + resXML, xmlStr, resXML);
+        assertEquals(xmlStr, resXML, "Unexpected result: " + resXML);
     }
 
 	private String toJSON(Element srcDOM, boolean ignoreNamespaces) throws Exception {
