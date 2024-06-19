@@ -26,17 +26,28 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
-public abstract class DOMTest extends TestCase {
+public abstract class DOMTest {
 	
 	private DocumentBuilder parser;
 	
 	public DOMTest() throws Exception {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance(); 
+		factory.setValidating(false);
+		factory.setNamespaceAware(true);
+		factory.setIgnoringElementContentWhitespace(false);
+	    parser = factory.newDocumentBuilder();
+	}
+	
+	@BeforeEach
+	protected void setUp() throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance(); 
 		factory.setValidating(false);
 		factory.setNamespaceAware(true);
