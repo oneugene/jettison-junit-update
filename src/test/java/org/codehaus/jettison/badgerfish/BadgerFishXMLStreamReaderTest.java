@@ -1,30 +1,13 @@
-/**
- * Copyright 2006 Envoi Solutions LLC
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package org.codehaus.jettison.badgerfish;
-
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
-
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.codehaus.jettison.AbstractXMLStreamReader;
 import org.codehaus.jettison.badgerfish.BadgerFishXMLStreamReader;
 import org.codehaus.jettison.json.JSONObject;
 
-public class BadgerFishXMLStreamReaderTest extends TestCase {
+public class BadgerFishXMLStreamReaderTest {
+
+    @Test
     public void testRootWithText() throws Exception {
         JSONObject obj = new JSONObject("{ \"alice\": { \"$\" : \"bob\" } }");
         AbstractXMLStreamReader reader = new BadgerFishXMLStreamReader(obj);
@@ -41,6 +24,7 @@ public class BadgerFishXMLStreamReaderTest extends TestCase {
         assertEquals(XMLStreamReader.END_DOCUMENT, reader.next());
     }
    
+    @Test
     public void testTwoChildren() throws Exception {
         JSONObject obj = new JSONObject(
                         "{ \"alice\": { \"bob\" : { \"$\": \"charlie\" }," +
@@ -68,6 +52,7 @@ public class BadgerFishXMLStreamReaderTest extends TestCase {
         assertEquals("alice", reader.getName().getLocalPart());
     }
     
+    @Test
     public void testTwoChildrenWithSameName() throws Exception {
         JSONObject obj = new JSONObject(
         "{ \"alice\": { \"bob\" : [ {\"$\": \"charlie\" }, {\"$\": \"david\" } ] } }");
@@ -94,6 +79,7 @@ public class BadgerFishXMLStreamReaderTest extends TestCase {
         assertEquals("alice", reader.getName().getLocalPart());
     }
 
+    @Test
     public void testAttributeAndText() throws Exception {
         JSONObject obj = new JSONObject(
         "{ \"alice\": { \"$\" : \"bob\", \"@charlie\" : \"david\" } }");
@@ -114,6 +100,7 @@ public class BadgerFishXMLStreamReaderTest extends TestCase {
         assertEquals("alice", reader.getName().getLocalPart());
     }
 
+    @Test
     public void testDefaultNamespace() throws Exception {
         JSONObject obj = new JSONObject(
             "{ \"alice\": { \"$\" : \"bob\", \"@xmlns\": { \"$\" : \"http:\\/\\/some-namespace\"} } }");
@@ -135,6 +122,7 @@ public class BadgerFishXMLStreamReaderTest extends TestCase {
         assertEquals("alice", reader.getName().getLocalPart());
     }
     
+    @Test
     public void testPrefixedNamespace() throws Exception {
         JSONObject obj = new JSONObject(
             "{ \"alice\": { \"$\" : \"bob\", \"@xmlns\": { \"$\" : \"http:\\/\\/some-namespace\", \"charlie\" : \"http:\\/\\/some-other-namespace\" } } }");
@@ -165,6 +153,7 @@ public class BadgerFishXMLStreamReaderTest extends TestCase {
     
 
     
+    @Test
     public void testPrefixedElements() throws Exception {
         JSONObject obj = new JSONObject(
             "{ \"alice\" : { " +
@@ -241,6 +230,7 @@ public class BadgerFishXMLStreamReaderTest extends TestCase {
         assertEquals("alice", reader.getName().getLocalPart());
     }
 
+    @Test
     public void testElementWithInvalidValue() throws Exception {
         JSONObject obj = new JSONObject("{ \"alice\": { \"foo\" : \"bob\" } }");
         AbstractXMLStreamReader reader = new BadgerFishXMLStreamReader(obj);
@@ -248,10 +238,8 @@ public class BadgerFishXMLStreamReaderTest extends TestCase {
         assertEquals(XMLStreamReader.START_ELEMENT, reader.next());
         assertEquals("alice", reader.getName().getLocalPart());
         
-        try {
+        assertThrows(XMLStreamException.class, () -> {
         	reader.next();
-        	fail("Must cause exception");
-        } catch (XMLStreamException e) {
-        }
+        });
     }
 }
