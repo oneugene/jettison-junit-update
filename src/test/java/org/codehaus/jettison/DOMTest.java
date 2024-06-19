@@ -12,6 +12,8 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.StringReader;
 import java.io.StringWriter;
 
+package com.example;
+
 public abstract class DOMTest {
 
     private DocumentBuilder parser;
