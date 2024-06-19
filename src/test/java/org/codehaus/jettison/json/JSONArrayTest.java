@@ -1,11 +1,14 @@
 package org.codehaus.jettison.json;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class JSONArrayTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.*;
+
+public class JSONArrayTest {
+    @Test
     public void testInvalidArraySequence() throws Exception {
     	try {
     	    new JSONArray("[32,");
@@ -15,6 +18,7 @@ public class JSONArrayTest extends TestCase {
     	}
     }
     
+    @Test
     public void testInvalidArraySequence2() throws Exception {
     	try {
     	    new JSONArray("[32,34");
@@ -24,6 +28,7 @@ public class JSONArrayTest extends TestCase {
     	}
     }
     
+    @Test
     public void testEscapingInArrayIsOnByDefault() {
       JSONArray array = new JSONArray();
       array.put("a string with / character");
@@ -31,6 +36,7 @@ public class JSONArrayTest extends TestCase {
       assertEquals(expectedValue, array.toString());
     }
     
+    @Test
     public void testEscapingInArrayIsTrunedOff() throws JSONException {
    
       JSONObject obj = new JSONObject();
@@ -47,6 +53,7 @@ public class JSONArrayTest extends TestCase {
       assertEquals(expectedValue, array.toString());
     }
 
+    @Test
     public void testInfiniteLoop() {
         String str = "[*/*A25] **";
         try {
@@ -57,6 +64,7 @@ public class JSONArrayTest extends TestCase {
         }
     }
 
+    @Test
     public void testInfiniteLoop2() {
         String str = "[/";
         try {
@@ -67,6 +75,7 @@ public class JSONArrayTest extends TestCase {
         }
     }
 
+    @Test
     public void testIssue52() throws JSONException {
         JSONObject.setGlobalRecursionDepthLimit(10);
         new JSONArray("[{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {a:10}]");
@@ -74,6 +83,7 @@ public class JSONArrayTest extends TestCase {
     }
 
     // https://github.com/jettison-json/jettison/issues/60
+    @Test
     public void testIssue60() throws JSONException {
         List<Object> list = new ArrayList<>();
         list.add(list);
@@ -83,5 +93,4 @@ public class JSONArrayTest extends TestCase {
             assertEquals(ex.getMessage(), "JSONArray has reached recursion depth limit of 500");
         }
     }
-
 }
