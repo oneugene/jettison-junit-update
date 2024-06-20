@@ -17,12 +17,15 @@ package org.codehaus.jettison.badgerfish;
 
 import java.io.StringWriter;
 
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.Test;
 import org.codehaus.jettison.AbstractXMLStreamWriter;
 import org.codehaus.jettison.badgerfish.BadgerFishXMLStreamWriter;
 
-public class BadgerFishXMLStreamWriterTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class BadgerFishXMLStreamWriterTest {
+
+    @Test
     public void testRootWithText() throws Exception {
         StringWriter strWriter = new StringWriter();
         AbstractXMLStreamWriter w = new BadgerFishXMLStreamWriter(strWriter);
@@ -46,6 +49,7 @@ public class BadgerFishXMLStreamWriterTest extends TestCase {
         assertEquals(string, string2);
     }
 
+    @Test
     public void testTwoChildren() throws Exception {
         StringWriter strWriter = new StringWriter();
         AbstractXMLStreamWriter w = new BadgerFishXMLStreamWriter(strWriter);
@@ -71,6 +75,7 @@ public class BadgerFishXMLStreamWriterTest extends TestCase {
                          "\"david\":{\"$\":\"edgar\"}}}", strWriter.toString());
     }
     
+    @Test
     public void testTwoChildrenWithSameName() throws Exception {
         StringWriter strWriter = new StringWriter();
         AbstractXMLStreamWriter w = new BadgerFishXMLStreamWriter(strWriter);
@@ -96,6 +101,7 @@ public class BadgerFishXMLStreamWriterTest extends TestCase {
                          strWriter.toString());
     }
 
+    @Test
     public void testMultipleChildrenAgain() throws Exception {
         StringWriter strWriter = new StringWriter();
         AbstractXMLStreamWriter xsw = new BadgerFishXMLStreamWriter(strWriter);
@@ -134,6 +140,7 @@ public class BadgerFishXMLStreamWriterTest extends TestCase {
                          strWriter.toString());
     }
     
+    @Test
     public void testAttributeAndText() throws Exception {
         StringWriter strWriter = new StringWriter();
         AbstractXMLStreamWriter w = new BadgerFishXMLStreamWriter(strWriter);
@@ -154,6 +161,7 @@ public class BadgerFishXMLStreamWriterTest extends TestCase {
                          strWriter.toString());
     }
 
+    @Test
     public void testDefaultNamespace() throws Exception {
         StringWriter strWriter = new StringWriter();
         BadgerFishXMLStreamWriter w = new BadgerFishXMLStreamWriter(strWriter);
@@ -174,6 +182,7 @@ public class BadgerFishXMLStreamWriterTest extends TestCase {
                          strWriter.toString());
     }
     
+    @Test
     public void testPrefixedNamespace() throws Exception {
         StringWriter strWriter = new StringWriter();
         BadgerFishXMLStreamWriter w = new BadgerFishXMLStreamWriter(strWriter);
@@ -202,6 +211,7 @@ public class BadgerFishXMLStreamWriterTest extends TestCase {
     
 
     
+    @Test
     public void testPrefixedElements() throws Exception {
         StringWriter strWriter = new StringWriter();
         BadgerFishXMLStreamWriter w = new BadgerFishXMLStreamWriter(strWriter);

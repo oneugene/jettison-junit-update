@@ -2,10 +2,12 @@ package org.codehaus.jettison.json;
 
 import java.math.BigDecimal;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class JSONTokenerTest extends TestCase {
-    
+public class JSONTokenerTest {
+
+    @Test
     public void testDoublePrecision() throws Exception {
         JSONTokener doubleTokener = new JSONTokener("9999999999999.9999");
         Object nextValue = doubleTokener.nextValue();
@@ -13,6 +15,7 @@ public class JSONTokenerTest extends TestCase {
         assertEquals(Double.valueOf("1.0E13"), nextValue);
     }
 
+    @Test
     public void testBigDecimalPrecision() throws Exception {
         JSONTokener bigDecimalTokener = new JSONTokener("9999999999999.9999") {
             {
@@ -23,5 +26,4 @@ public class JSONTokenerTest extends TestCase {
         assertEquals(BigDecimal.class, nextValue.getClass());
         assertEquals(new BigDecimal("9999999999999.9999"), nextValue);
     }
-
 }

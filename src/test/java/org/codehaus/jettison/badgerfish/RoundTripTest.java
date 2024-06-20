@@ -14,16 +14,18 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test large scale object round trips.
  */
-public class RoundTripTest extends TestCase {
+public class RoundTripTest {
 
     // ========================================================================
     // JUnit Tests
     // ========================================================================
+    @Test
     public void testEqualsHashCode() {
         DataSet ds1, ds2, ds3;
         ds1 = new DataSet();
@@ -31,24 +33,15 @@ public class RoundTripTest extends TestCase {
         ds3 = new DataSet();
 
         // test null..
-        try {
-            ds3.setDataPoints(null);
-            fail("Suppose to throw null pointer exception..");
-        } catch (NullPointerException npe) {
-            // success
-        }
+        Assertions.assertThrows(NullPointerException.class, () -> ds3.setDataPoints(null));
+
         // test null..
-        try {
-            ds3.addDataPoint(null);
-            fail("Suppose to throw null pointer exception..");
-        } catch (NullPointerException npe) {
-            // success
-        }
+        Assertions.assertThrows(NullPointerException.class, () -> ds3.addDataPoint(null));
 
         // standard checks..
-        assertTrue(ds1.equals(ds1));
-        assertFalse(ds1.equals(null));
-        assertFalse(ds1.equals(new Object()));
+        Assertions.assertTrue(ds1.equals(ds1));
+        Assertions.assertFalse(ds1.equals(null));
+        Assertions.assertFalse(ds1.equals(new Object()));
 
         // setup the name of the data set..
         ds1.setName("Some name");
@@ -58,20 +51,20 @@ public class RoundTripTest extends TestCase {
         addRandomDataPoints(15, ds1, ds2);
         addRandomDataPoints(15, ds3);
 
-        assertTrue(ds1.equals(ds2));
-        assertFalse(ds1.equals(ds3));
+        Assertions.assertTrue(ds1.equals(ds2));
+        Assertions.assertFalse(ds1.equals(ds3));
 
-        Set set = new HashSet();
+        Set<DataSet> set = new HashSet<>();
         set.add(ds1);
         set.add(ds2);
         set.add(ds3);
-        assertTrue(set.size() == 2);
+        Assertions.assertEquals(2, set.size());
     }
 
+    @Test
     public void testSerializeDeserialize() throws Exception {
         DataSet ds = new DataSet();
         ds.setName("Some Name!");
-        // addRandomDataPoints(50, ds);
         addRandomDataPoints(90, ds);
         assertRoundTrip(ds, new DataSet());
     }
@@ -100,7 +93,7 @@ public class RoundTripTest extends TestCase {
         try {
             serialize(f, instance);
             XMLStreamObject t = deserialize(f, newInstance);
-            assertEquals(instance, t);
+            Assertions.assertEquals(instance, t);
         } finally {
             f.delete();
         }
@@ -448,20 +441,20 @@ public class RoundTripTest extends TestCase {
         /**
          * Use a 'Set' to avoid any duplicates.
          */
-        Set dataPoints;
+        Set<DataPoint> dataPoints;
 
         /**
          * Empty constructor for just using the set methods.
          */
         public DataSet() {
             // set the defaults..
-            this(null, new HashSet());
+            this(null, new HashSet<>());
         }
 
         /**
          * Set the name and data points for the data set.
          */
-        public DataSet(String name, Set dataPoints) {
+        public DataSet(String name, Set<DataPoint> dataPoints) {
             setName(name);
             setDataPoints(dataPoints);
         }
@@ -469,7 +462,7 @@ public class RoundTripTest extends TestCase {
         /**
          * Get the group of data points.
          */
-        public Set getDataPoints() {
+        public Set<DataPoint> getDataPoints() {
             return dataPoints;
         }
 
@@ -478,7 +471,7 @@ public class RoundTripTest extends TestCase {
          * 
          * @throws NullPointerException if value is null.
          */
-        public void setDataPoints(Set value) {
+        public void setDataPoints(Set<DataPoint> value) {
             if (value == null) {
                 throw new NullPointerException();
             }
@@ -595,8 +588,8 @@ public class RoundTripTest extends TestCase {
                 xwrt.writeAttribute(NAME, getName());
             }
             // write out each data point
-            for (Iterator iter = getDataPoints().iterator(); iter.hasNext();) {
-                DataPoint dp = (DataPoint)iter.next();
+            for (Iterator<DataPoint> iter = getDataPoints().iterator(); iter.hasNext();) {
+                DataPoint dp = iter.next();
                 dp.toXMLStream(xwrt);
             }
             xwrt.writeEndElement();
@@ -698,14 +691,14 @@ public class RoundTripTest extends TestCase {
                 return this;
             }
             // check that they are the same class..
-            Class rhsClass = rhs.getClass();
-            Class lhsClass = lhs.getClass();
+            Class<?> rhsClass = rhs.getClass();
+            Class<?> lhsClass = lhs.getClass();
             if (rhsClass != lhsClass) {
                 setEquals(false);
             } else if (!lhsClass.isArray()) {
                 // The simple case, not an array, just test the element
                 setEquals(lhs.equals(rhs));
-            } else if (lhs instanceof Set) {
+            } else if (lhs instanceof Set<?>) {
                 // get the arrays for each an test them..
             }
             // 'Switch' on type of array, to dispatch to the correct handler

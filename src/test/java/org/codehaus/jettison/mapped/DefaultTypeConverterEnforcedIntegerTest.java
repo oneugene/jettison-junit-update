@@ -15,15 +15,19 @@
  */
 package org.codehaus.jettison.mapped;
 
-import junit.framework.TestCase;
 import org.codehaus.jettison.AbstractXMLStreamWriter;
+import org.junit.jupiter.api.Test;
+
 import java.io.StringWriter;
 
-public class DefaultTypeConverterEnforcedIntegerTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class DefaultTypeConverterEnforcedIntegerTest {
 
     /**
      * @see DefaultTypeConverterUnenforcedIntegerTest
      */
+    @Test
     public void testPrimitiveEnforcedInteger() throws Exception {
         Configuration cfg = new Configuration();
         DefaultConverter converter = new DefaultConverter();
