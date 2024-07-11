@@ -15,15 +15,13 @@
  */
 package org.codehaus.jettison.mapped;
 
-import java.util.HashMap;
-
 import org.codehaus.jettison.AbstractDOMDocumentParser;
 
 /**
  * JSON Mapped DOM parser
  * 
  * @author Thomas.Diesler@jboss.com
- * @author <a href="mailto:dejan@nighttale.net">Dejan Bosanac</a>
+ * @author <a.href="mailto:dejan@nighttale.net">Dejan Bosanac</a>
  * @since 21-Mar-2008
  */
 public class MappedDOMDocumentParser extends AbstractDOMDocumentParser {
