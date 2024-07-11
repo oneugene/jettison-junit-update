@@ -16,7 +16,6 @@
 package org.codehaus.jettison;
 
 import java.util.Iterator;
-import java.util.Map;
 
 import javax.xml.namespace.NamespaceContext;
 
