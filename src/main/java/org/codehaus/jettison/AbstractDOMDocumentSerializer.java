@@ -23,10 +23,8 @@ import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.dom.DOMSource;
 
-import org.codehaus.jettison.badgerfish.BadgerFishXMLOutputFactory;
 import org.w3c.dom.Element;
 
 /**
