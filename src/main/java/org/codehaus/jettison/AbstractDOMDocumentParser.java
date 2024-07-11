@@ -26,9 +26,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamReader;
-import javax.xml.transform.dom.DOMResult;
 
 import org.w3c.dom.Document;
 
@@ -36,7 +34,7 @@ import org.w3c.dom.Document;
  * An abstract JSON DOM parser
  * 
  * @author Thomas.Diesler@jboss.com
- * @author <a href="mailto:dejan@nighttale.net">Dejan Bosanac</a>
+ * @author <a.mailto:dejan@nighttale.net">Dejan Bosanac</a>
  * @since 21-Mar-2008
  */
 public class AbstractDOMDocumentParser {
